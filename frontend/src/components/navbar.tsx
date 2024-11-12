@@ -19,7 +19,7 @@ function Navbar() {
             <Image
               className=""
               src="/lacsa_logo.jpg"
-              width={60} 
+              width={60}
               height={60}
               alt="Lacsa logo"
             />
@@ -28,6 +28,9 @@ function Navbar() {
         <div className="hidden md:flex gap-6">
           <Link href="/login" className="hover:text-gray-600">
             Login
+          </Link>
+          <Link href="/create-task" className="hover:text-gray-600">
+            Create Task
           </Link>
         </div>
         <div className="md:hidden">
@@ -38,7 +41,16 @@ function Navbar() {
       </div>
       {isOpen && (
         <div className="flex flex-col items-start mt-4 space-y-2 md:hidden">
-          <Link href='/login' onClick={toggleMenu} className="hover:text-gray-600">Login</Link>
+          <Link
+            href="/login"
+            onClick={toggleMenu}
+            className="hover:text-gray-600"
+          >
+            Login
+          </Link>
+          <Link href="/create-task" className="hover:text-gray-600">
+            Create Task
+          </Link>
         </div>
       )}
     </div>
