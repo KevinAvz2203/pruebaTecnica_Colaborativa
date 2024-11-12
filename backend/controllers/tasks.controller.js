@@ -1,6 +1,7 @@
 import Task from "../models/task.model.js";
 import mongoose from "mongoose";
 
+/* Returns all existing tasks from the DB */
 export async function getTasks(req, res) {
   try {
     const tasks = await Task.find({});
@@ -11,6 +12,18 @@ export async function getTasks(req, res) {
   }
 }
 
+/* Returns a single task from the DB based on their ID */
+export async function getTask(req, res) {
+  try {
+    const task = await Task.findById(req.params.id);
+    res.status(200).json({ success: true, data: task });
+  } catch (error) {
+    console.log("Error while fetching task: ", error.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+}
+
+/* Returns creates and saves new Task into the DB */
 export async function createTask(req, res) {
   const task = req.body;
 
@@ -31,6 +44,7 @@ export async function createTask(req, res) {
   }
 }
 
+/* Updates a Task when given a valid ID */
 export async function updateTask(req, res) {
   const { id } = req.params;
 
@@ -50,6 +64,7 @@ export async function updateTask(req, res) {
   }
 }
 
+/* Removes a task from the DB */
 export async function deleteTask(req, res) {
   const { id } = req.params;
 
