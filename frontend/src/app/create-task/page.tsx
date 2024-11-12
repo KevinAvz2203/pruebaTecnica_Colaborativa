@@ -1,98 +1,124 @@
-// components/TaskForm.js
-import { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
-const TaskForm = () => {
-  const [task, setTask] = useState({
-    title: '',
-    description: '',
-    status: 'Pendiente',
-    assignedUser: '',
-  });
+const CreateTask = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [state, setState] = useState("Pending");
+  const [assignedUser, setAssignedUser] = useState("");
 
-  // Maneja los cambios en los campos del formulario
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTask((prevTask) => ({
-      ...prevTask,
-      [name]: value,
-    }));
-  };
-
-  // Maneja el envío del formulario
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const taskData = { title, description, state, assigned_user: assignedUser };
+
     try {
-      const response = await fetch('/api/tasks', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/tasks", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(task),
+        body: JSON.stringify(taskData),
       });
-      if (response.ok) {
-        console.log('Tarea guardada');
-      } else {
-        console.log('Error al guardar tarea');
-      }
+      if (!response.ok) throw new Error("Failed to create task");
+      // Optionally reset form fields here
     } catch (error) {
-      console.error('Error al enviar el formulario:', error);
+      console.error(error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <div>
-        <label htmlFor="title">Título</label>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg"
+    >
+      <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+        Create a New Task
+      </h2>
+
+      <div className="mb-5">
+        <label
+          htmlFor="title"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Task Title
+        </label>
         <input
           type="text"
-          id="title"
           name="title"
-          value={task.title}
-          onChange={handleChange}
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter task title"
           required
         />
       </div>
 
-      <div>
-        <label htmlFor="description">Descripción</label>
-        <textarea
-          id="description"
-          name="description"
-          value={task.description}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div>
-        <label htmlFor="status">Estado</label>
-        <select
-          id="status"
-          name="status"
-          value={task.status}
-          onChange={handleChange}
+      <div className="mb-5">
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700 mb-1"
         >
-          <option value="Pendiente">Pendiente</option>
-          <option value="En Proceso">En Proceso</option>
-          <option value="Completada">Completada</option>
+          Task Description
+        </label>
+        <textarea
+          name="description"
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter task description"
+          required
+        />
+      </div>
+
+      <div className="mb-5">
+        <label
+          htmlFor="state"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Task State
+        </label>
+        <select
+          name="state"
+          id="state"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          required
+        >
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
         </select>
       </div>
 
-      <div>
-        <label htmlFor="assignedUser">Usuario asignado</label>
+      <div className="mb-5">
+        <label
+          htmlFor="assignedUser"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Assigned User ID
+        </label>
         <input
           type="text"
-          id="assignedUser"
           name="assignedUser"
-          value={task.assignedUser}
-          onChange={handleChange}
-          required
+          id="assignedUser"
+          value={assignedUser}
+          onChange={(e) => setAssignedUser(e.target.value)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter assigned user ID"
         />
       </div>
 
-      <button type="submit">Guardar Tarea</button>
+      <button
+        type="submit"
+        className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      >
+        Submit
+      </button>
     </form>
   );
 };
 
-export default TaskForm;
+export default CreateTask;
