@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
 
+/* Returns all existing users from the DB */
 export async function getUsers(req, res) {
   try {
     const users = await User.find({});
@@ -11,6 +12,7 @@ export async function getUsers(req, res) {
   }
 }
 
+/* Returns creates and saves new User into the DB */
 export async function createUser(req, res) {
   const user = req.body;
 
