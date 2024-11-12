@@ -43,7 +43,11 @@ export default function Home() {
     setFilteredTasks(filtered);
   };
 
-  const handleTaskStateChange = async (taskId: string, newState: string, task: Task) => {
+  const handleTaskStateChange = async (
+    taskId: string,
+    newState: string,
+    task: Task
+  ) => {
     try {
       // Llama a updateTaskState pasando los detalles de la tarea
       await updateTaskState(taskId, newState, {
@@ -54,14 +58,10 @@ export default function Home() {
 
       // Actualiza las tareas en el estado local
       setTasks((prevTasks) =>
-        prevTasks.map((t) =>
-          t._id === taskId ? { ...t, state: newState } : t
-        )
+        prevTasks.map((t) => (t._id === taskId ? { ...t, state: newState } : t))
       );
       setFilteredTasks((prevTasks) =>
-        prevTasks.map((t) =>
-          t._id === taskId ? { ...t, state: newState } : t
-        )
+        prevTasks.map((t) => (t._id === taskId ? { ...t, state: newState } : t))
       );
     } catch (error) {
       console.error(error);
@@ -73,7 +73,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-black text-2xl font-bold text-center mb-6">To Do List</h1>
+        <h1 className="text-black text-2xl font-bold text-center mb-6">
+          To Do List
+        </h1>
 
         {/* Filtros */}
         <div className="mb-4 flex gap-4 justify-center text-black">
@@ -117,19 +119,25 @@ export default function Home() {
               {/* Botón para cambiar estado */}
               <div className="mt-4 flex gap-2">
                 <button
-                  onClick={() => handleTaskStateChange(task._id, "Pendiente", task)}
+                  onClick={() =>
+                    handleTaskStateChange(task._id, "Pendiente", task)
+                  }
                   className="bg-yellow-500 text-white py-1 px-3 rounded"
                 >
                   Pendiente
                 </button>
                 <button
-                  onClick={() => handleTaskStateChange(task._id, "En Proceso", task)}
+                  onClick={() =>
+                    handleTaskStateChange(task._id, "En Proceso", task)
+                  }
                   className="bg-blue-500 text-white py-1 px-3 rounded"
                 >
                   En Proceso
                 </button>
                 <button
-                  onClick={() => handleTaskStateChange(task._id, "Completada", task)}
+                  onClick={() =>
+                    handleTaskStateChange(task._id, "Completada", task)
+                  }
                   className="bg-green-500 text-white py-1 px-3 rounded"
                 >
                   Completada

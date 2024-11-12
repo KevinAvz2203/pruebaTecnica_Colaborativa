@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,10 +13,15 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center p-4">
       <div className="w-full max-w-sm bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-center mb-6 text-black">Iniciar Sesión</h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-black">
+          Iniciar Sesión
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="username" className="block text-gray-700 font-semibold mb-2">
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-semibold mb-2"
+            >
               Usuario:
             </label>
             <input

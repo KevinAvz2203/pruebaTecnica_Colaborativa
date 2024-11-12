@@ -22,12 +22,15 @@ export const updateTaskState = async (
   taskDetails: { title: string; description: string; assigned_user: string }
 ): Promise<Task | undefined> => {
   try {
-    const response = await axiosInstance.put<{ success: boolean; data: Task }>(`/tasks/${taskId}`, {
-      title: taskDetails.title, // Mantén el título actual
-      description: taskDetails.description, // Mantén la descripción actual
-      state: newState, // Cambia el estado
-      assigned_user: taskDetails.assigned_user, // Mantén el usuario asignado
-    });
+    const response = await axiosInstance.put<{ success: boolean; data: Task }>(
+      `/tasks/${taskId}`,
+      {
+        title: taskDetails.title, // Mantén el título actual
+        description: taskDetails.description, // Mantén la descripción actual
+        state: newState, // Cambia el estado
+        assigned_user: taskDetails.assigned_user, // Mantén el usuario asignado
+      }
+    );
     return response.data.data;
   } catch (error) {
     console.error("Error updating task state:", error);
