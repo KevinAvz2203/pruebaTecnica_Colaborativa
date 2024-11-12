@@ -74,7 +74,7 @@ export default function Home() {
         <h1 className="text-black text-2xl font-bold text-center mb-6">To Do List</h1>
 
         {/* Filtros */}
-        <div className="mb-4 flex gap-4 justify-center">
+        <div className="mb-4 flex gap-4 justify-center text-black">
           <select
             className="p-2 border border-gray-300 rounded"
             value={selectedState}
