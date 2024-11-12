@@ -4,7 +4,10 @@ import mongoose from "mongoose";
 /* Returns all existing tasks from the DB */
 export async function getTasks(req, res) {
   try {
-    const tasks = await Task.find({});
+    const tasks = await Task.find({}).populate({
+      path: "assigned_user",
+      populate: { path: "username" },
+    });
     res.status(200).json({ success: true, data: tasks });
   } catch (error) {
     console.log("Error while fetching tasks: ", error.message);
